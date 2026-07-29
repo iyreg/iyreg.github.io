@@ -65,8 +65,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 .nav { position: sticky; top: 0; z-index: 1000; height: 64px; background: var(--ink); color: var(--white); }
 .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); height: 100%; display: flex; align-items: center; justify-content: space-between; }
-.nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; letter-spacing: -0.02em; }
-.nav-brand img { height: 32px; width: auto; border-radius: 6px; }
+.nav-brand { display: flex; align-items: center; gap: 0; } .nav-brand > a { display: flex; flex-shrink: 0; } .nav-brand img { height: 36px; width: auto; border-radius: 8px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05)); padding: 2px; } .nav-brand-text { display: flex; flex-direction: column; gap: 1px; line-height: 1.2; margin-left: 10px; } .nav-brand-text > a { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; color: var(--white); text-decoration: none; } .nav-brand-sub { font-size: 0.62rem; font-weight: 400; color: rgba(255,255,255,0.45); white-space: nowrap; } .nav-brand-sub a { color: var(--green-light); font-weight: 500; } .nav-brand-sub a:hover { text-decoration: underline; }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a { font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.7); transition: color 0.2s; }
 .nav-links a:hover { color: var(--white); }
@@ -263,7 +262,7 @@ function main() {
     <style>${CSS}</style>
 </head>
 <body>
-<nav class="nav"><div class="nav-inner"><a href="#" class="nav-brand"><img src="${esc(fixImg(meta.siteLogo || '', siteUrl))}" alt="${esc(siteName)}"> ${esc(siteName)}</a><div class="nav-links"><a href="#products">全部商品</a><a href="#features">为什么选择我们</a><a href="${siteUrl}" target="_blank" rel="noopener">帮助中心</a></div><a href="${siteUrl}" target="_blank" rel="noopener" class="nav-cta">进入商城</a></div></nav>
+<nav class="nav"><div class="nav-inner"><div class="nav-brand"><a href="#"><img src="${esc(fixImg(meta.siteLogo || '', siteUrl))}" alt="${esc(siteName)}"></a><div class="nav-brand-text"><a href="#">${esc(siteName)}</a><div class="nav-brand-sub">新商城网址：<a href="https://hltx.eu.cc" target="_blank" rel="noopener">https://hltx.eu.cc</a></div></div></div><div class="nav-links"><a href="#products">全部商品</a><a href="#features">为什么选择我们</a><a href="${siteUrl}" target="_blank" rel="noopener">帮助中心</a></div><a href="${siteUrl}" target="_blank" rel="noopener" class="nav-cta">进入商城</a></div></nav>
 
 <section class="hero"><div class="hero-inner"><div class="hero-content"><div class="hero-pill reveal"><span class="dot"></span>全场自动发货 · 质保无忧</div><h1 class="reveal">数字账号<br>的<span class="highlight">品质之选</span></h1><p class="reveal">甄选 Google Voice 靓号、Gmail 邮箱、Apple ID 等优质数字资源，一手源头直供，即买即用。</p><div class="hero-actions reveal"><a href="${siteUrl}" target="_blank" rel="noopener" class="btn-green">开始选购 →</a><a href="#features" class="btn-outline">了解更多</a></div></div><div class="hero-visual reveal"><div class="hero-card"><div class="hero-card-head"><div class="hero-card-icon">🏪</div><div><div class="hero-card-name">${esc(siteName)}</div><div class="hero-card-sub">一站式数字账号平台</div></div></div><div class="hero-card-grid"><div class="hero-card-stat"><div class="hero-card-num">${activeCats.length}</div><div class="hero-card-label">品类</div></div><div class="hero-card-stat"><div class="hero-card-num">${products.filter(p=>p.active!==0).length}+</div><div class="hero-card-label">商品</div></div><div class="hero-card-stat"><div class="hero-card-num">24h</div><div class="hero-card-label">发货</div></div></div></div></div></div></section>
 

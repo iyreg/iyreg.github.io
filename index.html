@@ -85,10 +85,28 @@ img { max-width: 100%; height: auto; display: block; }
   height: 100%; display: flex; align-items: center; justify-content: space-between;
 }
 .nav-brand {
-  display: flex; align-items: center; gap: 10px;
-  font-weight: 700; font-size: 1rem; letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 0;
 }
-.nav-brand img { height: 32px; width: auto; border-radius: 6px; }
+.nav-brand > a {
+  display: flex; flex-shrink: 0;
+}
+.nav-brand img {
+  height: 36px; width: auto; border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+  padding: 2px;
+}
+.nav-brand-text {
+  display: flex; flex-direction: column; gap: 1px; line-height: 1.2; margin-left: 10px;
+}
+.nav-brand-text > a {
+  font-weight: 700; font-size: 0.95rem; letter-spacing: -0.02em; color: var(--white);
+  text-decoration: none;
+}
+.nav-brand-sub {
+  font-size: 0.62rem; font-weight: 400; color: rgba(255,255,255,0.45); white-space: nowrap;
+}
+.nav-brand-sub a { color: var(--green-light); font-weight: 500; }
+.nav-brand-sub a:hover { text-decoration: underline; }
 .nav-links { display: flex; align-items: center; gap: 28px; }
 .nav-links a {
   font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.7);
@@ -375,10 +393,15 @@ img { max-width: 100%; height: auto; display: block; }
 <!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#" class="nav-brand">
-      <img src="https://fengzi.eu.org/image/6f85fbbb-c6dd-47ed-9894-faf8ee723867.webp" alt="精选账号商城">
-      精选账号商城
-    </a>
+    <div class="nav-brand">
+      <a href="#">
+        <img src="https://fengzi.eu.org/image/6f85fbbb-c6dd-47ed-9894-faf8ee723867.webp" alt="精选账号商城">
+      </a>
+      <div class="nav-brand-text">
+        <a href="#">精选账号商城</a>
+        <div class="nav-brand-sub">新商城网址：<a href="https://hltx.eu.cc" target="_blank" rel="noopener">https://hltx.eu.cc</a></div>
+      </div>
+    </div>
     <div class="nav-links">
       <a href="#products">全部商品</a>
       <a href="#features">为什么选择我们</a>
