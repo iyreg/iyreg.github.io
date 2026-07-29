@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * 精选账号商城 · 现代科技感独立站生成器
- * 风格：深色主题 · 流光渐变 · 玻璃拟态
+ * 精选账号商城 · Shopify 风格独立站生成器
+ * 风格：干净专业 · 商务感 · 绿色主题
  */
 
 const fs = require('fs');
@@ -24,7 +24,6 @@ function fixImg(url, base) {
     return url;
 }
 
-// ── SEO 配置 ──
 function loadRootJSON(name) {
     const fp = path.join(__dirname, name);
     if (!fs.existsSync(fp)) return null;
@@ -45,173 +44,142 @@ const SEO_FAVICON = SEO.favicon || '';
 
 // ── CSS ──
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 :root {
-  --bg-deep: #0a0a0f;
-  --bg-main: #0f0f18;
-  --bg-card: rgba(18, 18, 30, 0.7);
-  --bg-card-hover: rgba(24, 24, 42, 0.85);
-  --bg-glass: rgba(255, 255, 255, 0.03);
-  --surface-1: #16162a;
-  --accent-1: #6c5ce7;
-  --accent-2: #a29bfe;
-  --accent-3: #00cec9;
-  --gradient-primary: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #74b9ff 100%);
-  --gradient-card: linear-gradient(145deg, rgba(108,92,231,0.08), rgba(0,206,201,0.04));
-  --gradient-hero: linear-gradient(135deg, #6c5ce7 0%, #00cec9 50%, #a29bfe 100%);
-  --gradient-price: linear-gradient(135deg, #fd79a8 0%, #e17055 100%);
-  --text-primary: #f0f0f8;
-  --text-secondary: #a0a0c0;
-  --text-muted: #606080;
-  --border: rgba(108, 92, 231, 0.12);
-  --border-hover: rgba(108, 92, 231, 0.3);
-  --border-subtle: rgba(255, 255, 255, 0.04);
-  --radius: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-  --max-w: 1280px;
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(108, 92, 231, 0.06);
-  --shadow-card-hover: 0 8px 48px rgba(108, 92, 231, 0.2), 0 0 0 1px rgba(108, 92, 231, 0.15);
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --white: #ffffff; --snow: #f6f6f7; --smoke: #eeeff1; --silver: #c9cccf;
+  --slate: #6d7175; --ink: #202223; --black: #000000;
+  --green: #008060; --green-light: #00a67c; --green-dark: #006e52; --green-bg: #f1fdf6;
+  --blue: #2c6ecb; --orange: #e4793a; --red: #d72c0d;
+  --radius-sm: 8px; --radius: 12px; --radius-lg: 16px; --radius-xl: 24px;
+  --max-w: 1200px;
+  --shadow-sm: 0 1px 0 rgba(0,0,0,0.05); --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.1); --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
+  --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94); --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-
-body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg-deep); color: var(--text-primary); line-height: 1.7;
-  min-height: 100vh; overflow-x: hidden; -webkit-font-smoothing: antialiased;
-}
-
-.bg-effects { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-.bg-effects .orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4; animation: orbFloat 20s ease-in-out infinite alternate; }
-.bg-effects .orb-1 { width: 600px; height: 600px; top: -200px; left: -100px; background: radial-gradient(circle, rgba(108,92,231,0.3), transparent 70%); }
-.bg-effects .orb-2 { width: 500px; height: 500px; bottom: -150px; right: -100px; background: radial-gradient(circle, rgba(0,206,201,0.2), transparent 70%); animation-delay: -10s; }
-.bg-effects .orb-3 { width: 400px; height: 400px; top: 40%; left: 50%; background: radial-gradient(circle, rgba(162,155,254,0.15), transparent 70%); animation-delay: -5s; }
-@keyframes orbFloat { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(40px, -30px) scale(1.1); } 100% { transform: translate(-20px, 20px) scale(0.95); } }
-
-.bg-grid { position: fixed; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(108,92,231,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(108,92,231,0.03) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse at 50% 30%, black 0%, transparent 70%); }
-
-a { color: var(--accent-2); text-decoration: none; transition: color .3s var(--ease-out); }
-a:hover { color: var(--accent-3); }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--white); color: var(--ink); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
 img { max-width: 100%; height: auto; display: block; }
-.container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
 
-.header { position: sticky; top: 0; z-index: 1000; height: 72px; background: rgba(10, 10, 15, 0.8); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4); border-bottom: 1px solid var(--border-subtle); transition: background .4s; }
-.header.scrolled { background: rgba(10, 10, 15, 0.95); }
-.header-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
-.logo-area { display: flex; align-items: center; gap: 14px; }
-.logo-mark { height: 42px; border-radius: 12px; overflow: hidden; background: var(--gradient-primary); padding: 2px; box-shadow: 0 0 20px rgba(108, 92, 231, 0.3); flex-shrink: 0; }
-.logo-mark img { height: 100%; width: auto; border-radius: 10px; display: block; }
-.logo-text-group { display: flex; flex-direction: column; gap: 1px; }
-.logo-text { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.logo-sub { font-size: .7rem; color: var(--text-muted); letter-spacing: .3px; }
-.logo-sub a { color: var(--text-muted); } .logo-sub a:hover { color: var(--accent-2); }
-.header-actions { display: flex; align-items: center; gap: 12px; }
-.header-pill { padding: 8px 20px; border-radius: 100px; font-size: .78rem; font-weight: 600; background: var(--gradient-primary); color: #fff; box-shadow: 0 0 20px rgba(108, 92, 231, 0.25); letter-spacing: .3px; transition: all .3s var(--ease-out); }
-.header-pill:hover { transform: translateY(-1px); box-shadow: 0 0 30px rgba(108, 92, 231, 0.4); color: #fff; }
-.header-badge-sm { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 100px; background: rgba(0, 206, 201, 0.08); border: 1px solid rgba(0, 206, 201, 0.15); font-size: .72rem; color: var(--accent-3); font-weight: 500; }
-.pulse-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-3); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .5; transform: scale(1.3); } }
+.nav { position: sticky; top: 0; z-index: 1000; height: 64px; background: var(--ink); color: var(--white); }
+.nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); height: 100%; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1rem; letter-spacing: -0.02em; }
+.nav-brand img { height: 32px; width: auto; border-radius: 6px; }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.7); transition: color 0.2s; }
+.nav-links a:hover { color: var(--white); }
+.nav-cta { padding: 8px 20px; border-radius: 6px; background: var(--green); color: var(--white); font-size: 0.82rem; font-weight: 600; transition: all 0.2s; }
+.nav-cta:hover { background: var(--green-light); color: var(--white); }
 
-.hero { position: relative; padding: 80px 24px 40px; text-align: center; overflow: hidden; }
-.hero-glow { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; pointer-events: none; background: radial-gradient(ellipse, rgba(108,92,231,0.12) 0%, transparent 70%); }
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 100px; margin-bottom: 28px; background: var(--bg-glass); border: 1px solid var(--border); font-size: .8rem; color: var(--text-secondary); font-weight: 500; backdrop-filter: blur(10px); }
-.hero-badge .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-3); box-shadow: 0 0 12px rgba(0, 206, 201, 0.5); }
-.hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5.5vw, 3.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 20px; }
-.hero h1 .gradient-text { background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.hero-desc { font-size: 1.05rem; color: var(--text-secondary); max-width: 540px; margin: 0 auto 48px; font-weight: 400; line-height: 1.8; }
+.hero { position: relative; overflow: hidden; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%); color: var(--white); padding: 100px 0 120px; }
+.hero::before { content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px; border-radius: 50%; background: radial-gradient(circle, rgba(0,128,96,0.2) 0%, transparent 70%); pointer-events: none; }
+.hero::after { content: ''; position: absolute; bottom: -30%; left: -10%; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(44,110,203,0.15) 0%, transparent 70%); pointer-events: none; }
+.hero-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+.hero-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; border-radius: 100px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.8); margin-bottom: 24px; }
+.hero-pill .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-light); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+.hero h1 { font-size: clamp(2.5rem, 5vw, 3.8rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.04em; margin-bottom: 20px; }
+.hero h1 .highlight { color: #67d4a8; }
+.hero p { font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,0.65); max-width: 460px; margin-bottom: 36px; }
+.hero-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.btn-green { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: 6px; background: var(--green); color: var(--white); font-size: 0.95rem; font-weight: 600; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,128,96,0.3); }
+.btn-green:hover { background: var(--green-light); color: var(--white); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,128,96,0.4); }
+.btn-outline { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 6px; background: transparent; color: var(--white); font-size: 0.95rem; font-weight: 600; border: 1.5px solid rgba(255,255,255,0.25); transition: all 0.2s; }
+.btn-outline:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+.hero-visual { display: flex; justify-content: center; }
+.hero-card { background: rgba(255,255,255,0.06); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-xl); padding: 32px; width: 100%; max-width: 400px; }
+.hero-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.hero-card-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--green), var(--green-light)); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.hero-card-name { font-weight: 700; font-size: 0.95rem; }
+.hero-card-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.hero-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.hero-card-stat { text-align: center; }
+.hero-card-num { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; }
+.hero-card-label { font-size: 0.68rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
 
-.stats-row { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; max-width: 700px; margin: 0 auto; }
-.stat-chip { display: flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: var(--radius); background: var(--bg-card); border: 1px solid var(--border); backdrop-filter: blur(10px); transition: all .3s var(--ease-out); }
-.stat-chip:hover { border-color: var(--border-hover); background: var(--bg-card-hover); transform: translateY(-2px); }
-.stat-chip .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.stat-chip .stat-label { font-size: .75rem; color: var(--text-muted); font-weight: 500; letter-spacing: .5px; text-transform: uppercase; }
+.trust-bar { padding: 32px 0; background: var(--snow); border-bottom: 1px solid var(--smoke); }
+.trust-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.trust-item { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--slate); font-weight: 500; }
+.trust-item .icon { font-size: 1.1rem; }
 
-.filter-section { padding: 0 0 16px; }
-.filter-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-.filter-btn { padding: 10px 22px; border-radius: 100px; cursor: pointer; font-size: .82rem; font-weight: 600; transition: all .3s var(--ease-out); background: var(--bg-card); color: var(--text-secondary); border: 1px solid var(--border-subtle); letter-spacing: .2px; user-select: none; backdrop-filter: blur(10px); }
-.filter-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); border-color: var(--border); }
-.filter-btn.active { background: var(--gradient-primary); color: #fff; border-color: transparent; box-shadow: 0 0 24px rgba(108, 92, 231, 0.3); }
+.section { padding: 80px 0; }
+.section-gray { background: var(--snow); }
+.section-dark { background: var(--ink); color: var(--white); }
+.section-header { text-align: center; margin-bottom: 48px; }
+.section-tag { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+.section-dark .section-tag { color: var(--green-light); }
+.section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.03em; margin-bottom: 14px; }
+.section-desc { font-size: 1rem; color: var(--slate); max-width: 520px; margin: 0 auto; line-height: 1.7; }
+.section-dark .section-desc { color: rgba(255,255,255,0.5); }
 
-.products-section { padding: 24px 0 80px; }
-.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.cat-card { background: var(--white); border: 1px solid var(--smoke); border-radius: var(--radius-lg); padding: 28px 20px; text-align: center; cursor: pointer; transition: all 0.3s var(--ease-out); }
+.cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--green); }
+.cat-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+.cat-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+.cat-count { font-size: 0.78rem; color: var(--slate); }
 
-.product-card { position: relative; display: block; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; transition: all .45s var(--ease-out); cursor: pointer; text-decoration: none; color: inherit; backdrop-filter: blur(10px); }
-.product-card::before { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); background: var(--gradient-card); opacity: 0; transition: opacity .4s; z-index: 0; pointer-events: none; }
-.product-card:hover { transform: translateY(-8px); border-color: var(--border-hover); box-shadow: var(--shadow-card-hover); }
-.product-card:hover::before { opacity: 1; }
+.filter-bar { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+.filter-btn { padding: 8px 20px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 600; background: var(--snow); color: var(--slate); border: 1px solid var(--smoke); transition: all 0.2s; user-select: none; }
+.filter-btn:hover { background: var(--smoke); color: var(--ink); }
+.filter-btn.active { background: var(--ink); color: var(--white); border-color: var(--ink); }
 
-.card-img-wrap { position: relative; overflow: hidden; height: 200px; background: var(--surface-1); }
-.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
-.product-card:hover .card-img-wrap img { transform: scale(1.08); }
-.card-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(10,10,15,0.6) 100%); }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 20px; }
+.product-card { background: var(--white); border: 1px solid var(--smoke); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.35s var(--ease-out); display: block; }
+.product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
+.card-img { position: relative; overflow: hidden; height: 200px; background: var(--snow); }
+.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease-out); }
+.product-card:hover .card-img img { transform: scale(1.05); }
+.card-badge { position: absolute; top: 12px; left: 12px; z-index: 2; padding: 4px 12px; border-radius: 4px; font-size: 0.68rem; font-weight: 700; background: var(--ink); color: var(--white); letter-spacing: 0.03em; }
+.card-body { padding: 20px; }
+.card-cat { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+.card-title { font-size: 0.9rem; font-weight: 600; line-height: 1.5; color: var(--ink); margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; }
+.card-foot { display: flex; align-items: center; justify-content: space-between; }
+.card-price { font-size: 1.2rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.card-price .from { font-size: 0.68rem; font-weight: 400; color: var(--slate); margin-right: 2px; }
+.card-btn { width: 36px; height: 36px; border-radius: 6px; background: var(--snow); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; color: var(--slate); transition: all 0.2s; }
+.product-card:hover .card-btn { background: var(--green); color: var(--white); }
 
-.card-tag { position: absolute; top: 14px; left: 14px; z-index: 2; padding: 5px 14px; border-radius: 8px; font-size: .7rem; font-weight: 700; background: rgba(108, 92, 231, 0.85); color: #fff; backdrop-filter: blur(8px); letter-spacing: .5px; box-shadow: 0 2px 12px rgba(108, 92, 231, 0.3); }
+.features-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.feature-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 32px 24px; text-align: center; transition: all 0.3s var(--ease-out); }
+.feature-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+.feature-icon { font-size: 1.8rem; margin-bottom: 16px; display: block; }
+.feature-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+.feature-card p { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
 
-.card-body { position: relative; padding: 20px; z-index: 1; }
-.card-cat { font-size: .68rem; color: var(--accent-2); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; }
-.card-title { font-size: .92rem; font-weight: 600; line-height: 1.6; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--text-primary); min-height: 2.9em; }
-.card-footer { display: flex; align-items: center; justify-content: space-between; }
-.card-price { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; }
-.card-price .from { font-size: .68rem; font-weight: 400; color: var(--text-muted); margin-right: 2px; font-family: 'Plus Jakarta Sans', sans-serif; }
-.card-price .amount { background: var(--gradient-price); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.card-cta { width: 38px; height: 38px; border-radius: 12px; background: rgba(108, 92, 231, 0.08); display: flex; align-items: center; justify-content: center; color: var(--accent-2); font-size: 1rem; transition: all .3s var(--ease-out); border: 1px solid rgba(108, 92, 231, 0.1); }
-.product-card:hover .card-cta { background: var(--gradient-primary); color: #fff; border-color: transparent; box-shadow: 0 0 16px rgba(108, 92, 231, 0.3); transform: translateX(4px); }
+.editorial { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px); }
+.editorial-content h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 16px; line-height: 1.15; }
+.editorial-content p { font-size: 1rem; color: var(--slate); line-height: 1.8; margin-bottom: 28px; }
+.editorial-visual { border-radius: var(--radius-xl); overflow: hidden; background: var(--snow); aspect-ratio: 4/3; }
+.editorial-visual img { width: 100%; height: 100%; object-fit: cover; }
+.editorial-stats { display: flex; gap: 32px; padding-top: 20px; border-top: 1px solid var(--smoke); }
+.editorial-num { font-size: 1.5rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.editorial-label { font-size: 0.72rem; color: var(--slate); margin-top: 2px; }
 
-.features-section { padding: 40px 0 80px; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
-.feature-card { background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 32px 24px; text-align: center; transition: all .4s var(--ease-out); backdrop-filter: blur(10px); }
-.feature-card:hover { border-color: var(--border); transform: translateY(-4px); box-shadow: var(--shadow-card); }
-.feature-icon { width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 18px; background: var(--gradient-card); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: all .3s; }
-.feature-card:hover .feature-icon { box-shadow: 0 0 20px rgba(108, 92, 231, 0.2); border-color: var(--border-hover); }
-.feature-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: .95rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); letter-spacing: -.01em; }
-.feature-card p { font-size: .8rem; color: var(--text-secondary); font-weight: 400; line-height: 1.6; }
+.banner { background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 50%, var(--green-light) 100%); color: var(--white); border-radius: var(--radius-xl); padding: 60px 40px; text-align: center; position: relative; overflow: hidden; }
+.banner::before { content: ''; position: absolute; top: -50%; right: -30%; width: 500px; height: 500px; border-radius: 50%; background: rgba(255,255,255,0.05); pointer-events: none; }
+.banner h2 { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em; }
+.banner p { font-size: 1rem; color: rgba(255,255,255,0.8); margin-bottom: 28px; }
+.btn-white { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; border-radius: 6px; background: var(--white); color: var(--green-dark); font-size: 0.95rem; font-weight: 700; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+.btn-white:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); color: var(--green-dark); }
 
-.cta-section { padding: 0 0 80px; }
-.cta-banner { position: relative; overflow: hidden; border-radius: var(--radius-xl); padding: 60px 40px; background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,206,201,0.08)); border: 1px solid var(--border); text-align: center; backdrop-filter: blur(10px); }
-.cta-banner::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 30%, rgba(108,92,231,0.08), transparent 50%), radial-gradient(circle at 70% 70%, rgba(0,206,201,0.06), transparent 50%); animation: rotateBg 30s linear infinite; }
-@keyframes rotateBg { to { transform: rotate(360deg); } }
-.cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; margin-bottom: 12px; position: relative; letter-spacing: -.02em; }
-.cta-banner p { color: var(--text-secondary); font-size: .95rem; margin-bottom: 28px; position: relative; }
-.cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 36px; border-radius: 100px; background: var(--gradient-primary); color: #fff; font-size: .9rem; font-weight: 700; letter-spacing: .3px; transition: all .3s var(--ease-out); box-shadow: 0 0 30px rgba(108, 92, 231, 0.3); position: relative; }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(108, 92, 231, 0.5); color: #fff; }
+.footer { background: var(--ink); color: rgba(255,255,255,0.5); padding: 60px 0 40px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; max-width: var(--max-w); margin: 0 auto; padding: 0 clamp(20px, 4vw, 40px) 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.footer-brand { font-weight: 800; font-size: 1.05rem; color: var(--white); margin-bottom: 12px; }
+.footer-desc { font-size: 0.82rem; line-height: 1.7; margin-bottom: 16px; }
+.footer-col h4 { font-size: 0.78rem; font-weight: 700; color: var(--white); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 0.82rem; color: rgba(255,255,255,0.5); padding: 4px 0; transition: color 0.2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { max-width: var(--max-w); margin: 0 auto; padding: 20px clamp(20px, 4vw, 40px) 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 0.75rem; }
 
-.footer { position: relative; text-align: center; padding: 48px 24px 40px; border-top: 1px solid var(--border-subtle); }
-.footer-line { width: 40px; height: 2px; margin: 0 auto 24px; background: var(--gradient-primary); border-radius: 2px; }
-.footer p { color: var(--text-muted); font-size: .78rem; line-height: 1.8; }
-.footer a { color: var(--text-muted); transition: color .3s; } .footer a:hover { color: var(--accent-2); }
-.footer-links { margin-bottom: 12px; }
-.footer-links a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px; border-radius: 100px; background: var(--bg-card); border: 1px solid var(--border-subtle); color: var(--text-secondary); font-size: .82rem; font-weight: 500; transition: all .3s; }
-.footer-links a:hover { border-color: var(--border-hover); color: var(--accent-2); transform: translateY(-1px); }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-.anim { opacity: 0; animation: fadeUp .6s var(--ease-out) forwards; }
-.anim-d1 { animation-delay: .05s; } .anim-d2 { animation-delay: .1s; } .anim-d3 { animation-delay: .15s; }
-.anim-d4 { animation-delay: .2s; } .anim-d5 { animation-delay: .25s; } .anim-d6 { animation-delay: .3s; }
-.reveal { opacity: 0; transform: translateY(24px); transition: all .6s var(--ease-out); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-@media (max-width: 768px) {
-  .hero { padding: 50px 16px 30px; } .hero h1 { font-size: 1.8rem; }
-  .hero-desc { font-size: .92rem; margin-bottom: 32px; }
-  .stats-row { gap: 6px; } .stat-chip { padding: 10px 16px; } .stat-chip .stat-num { font-size: 1.2rem; }
-  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .card-img-wrap { height: 150px; } .card-body { padding: 14px; } .card-title { font-size: .82rem; min-height: auto; }
-  .card-price { font-size: 1.05rem; } .header-badge-sm { display: none; } .container { padding: 0 16px; }
-  .features-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; } .feature-card { padding: 24px 16px; }
-  .cta-banner { padding: 40px 24px; } .filter-bar { gap: 6px; } .filter-btn { padding: 8px 16px; font-size: .75rem; }
-}
-@media (max-width: 480px) {
-  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .card-img-wrap { height: 130px; } .card-body { padding: 10px; }
-  .card-tag { font-size: .6rem; padding: 4px 10px; top: 8px; left: 8px; }
-  .card-cta { width: 30px; height: 30px; border-radius: 8px; font-size: .8rem; }
-  .stat-chip { padding: 8px 12px; } .stat-chip .stat-num { font-size: 1rem; } .stat-chip .stat-label { font-size: .65rem; }
-  .logo-sub { display: none; }
-}
+@media (max-width: 1024px) { .hero-inner { grid-template-columns: 1fr; gap: 40px; text-align: center; } .hero p { margin-left: auto; margin-right: auto; } .hero-actions { justify-content: center; } .cat-grid { grid-template-columns: repeat(2, 1fr); } .features-grid { grid-template-columns: repeat(2, 1fr); } .editorial { grid-template-columns: 1fr; gap: 40px; } .footer-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 768px) { .nav-links { display: none; } .hero { padding: 70px 0 80px; } .hero h1 { font-size: 2rem; } .hero-card { padding: 24px; } .hero-card-num { font-size: 1.3rem; } .trust-inner { gap: 20px; } .trust-item { font-size: 0.75rem; } .products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } .card-img { height: 150px; } .card-body { padding: 14px; } .card-title { font-size: 0.82rem; } .features-grid { grid-template-columns: 1fr; } .banner { padding: 40px 24px; } .filter-bar { gap: 6px; } .filter-btn { padding: 6px 14px; font-size: 0.78rem; } }
+@media (max-width: 480px) { .hero-actions { flex-direction: column; width: 100%; } .btn-green, .btn-outline { width: 100%; justify-content: center; } .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; } .card-img { height: 120px; } .card-body { padding: 10px; } .card-badge { font-size: 0.6rem; padding: 3px 8px; } .card-btn { width: 28px; height: 28px; font-size: 0.75rem; } .hero-card-grid { gap: 8px; } .footer-grid { grid-template-columns: 1fr; } }
 `;
 
 const JS = `
@@ -222,18 +190,20 @@ function filterCategory(id, el) {
     if (id === 'all' || c.dataset.cat == id) {
       c.style.display = '';
       c.style.opacity = '0'; c.style.transform = 'translateY(20px)';
-      setTimeout(() => { c.style.transition = 'all .4s cubic-bezier(0.16,1,0.3,1)'; c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 40);
+      setTimeout(() => { c.style.transition = 'all 0.4s cubic-bezier(0.16,1,0.3,1)'; c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 50);
     } else { c.style.display = 'none'; }
   });
 }
-window.addEventListener('scroll', () => { document.getElementById('header').classList.toggle('scrolled', window.scrollY > 20); });
 document.addEventListener('DOMContentLoaded', () => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 60); observer.unobserve(entry.target); } });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { const t = document.querySelector(a.getAttribute('href')); if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); } }); });
 });
 `;
+
+function shortCatName(name) {
+    return name.replace(/谷歌美国电话\\/?/i, '').replace(/GoogleVoice\\s*\\/??\\s*GV靓号/i, 'GV 靓号').replace(/谷歌邮箱\\s*\\/??\\s*油管\\s*\\/??\\s*Google\\s*\\/??\\s*Gmail/i, '谷歌邮箱').replace(/苹果id\\s*\\/??\\s*Apple\\s*id\\s*\\/??\\s*AppStore/i, '苹果 ID').replace(/服务类/i, '技术服务').trim() || name;
+}
 
 function main() {
     const config = loadJSON('config.json') || {};
@@ -249,22 +219,14 @@ function main() {
 
     if (!fs.existsSync(DIST_DIR)) fs.mkdirSync(DIST_DIR, { recursive: true });
 
-    // 简化分类名用于 filter 按钮
-    function shortCatName(name) {
-        return name
-            .replace(/谷歌美国电话\/?/i, '')
-            .replace(/GoogleVoice\s*\/?\s*GV靓号/i, 'GV靓号')
-            .replace(/谷歌邮箱\s*\/?\s*油管\s*\/?\s*Google\s*\/?\s*Gmail/i, '谷歌邮箱')
-            .replace(/苹果id\s*\/?\s*Apple\s*id\s*\/?\s*AppStore/i, '苹果ID')
-            .replace(/服务类/i, '服务类')
-            .trim() || name;
-    }
-
     const activeCats = categories.filter(c => products.some(p => p.category_id === c.id));
-    const catBtns = activeCats
-        .sort((a, b) => (b.sort || 0) - (a.sort || 0))
-        .map(c => `<div class="filter-btn" onclick="filterCategory(${c.id}, this)">${esc(shortCatName(c.name))}</div>`)
-        .join('\n            ');
+    const catBtns = activeCats.sort((a, b) => (b.sort || 0) - (a.sort || 0)).map(c => `<div class="filter-btn" data-cat="${c.id}" onclick="filterCategory(${c.id}, this)">${esc(shortCatName(c.name))}</div>`).join('\n      ');
+
+    const catCards = activeCats.sort((a, b) => (b.sort || 0) - (a.sort || 0)).map((c, i) => {
+        const emojis = ['📱', '📧', '🍎', '🛠️'];
+        const count = products.filter(p => p.category_id === c.id && p.active !== 0).length;
+        return `<div class="cat-card reveal" onclick="filterCategory(${c.id}, document.querySelector('.filter-btn[data-cat=${c.id}]'))"><span class="cat-icon">${emojis[i % emojis.length]}</span><div class="cat-name">${esc(shortCatName(c.name))}</div><div class="cat-count">${count} 款商品</div></div>`;
+    }).join('\n');
 
     const cards = products.filter(p => p.active !== 0).sort((a, b) => (b.sort||0) - (a.sort||0)).map((p, i) => {
         const cat = categories.find(c => c.id === p.category_id);
@@ -273,154 +235,60 @@ function main() {
         const variants = p.variants || [];
         const minPrice = variants.length ? Math.min(...variants.map(v => v.price)) : 0;
         const tags = (p.tags || '').split(',').map(t => t.trim()).filter(Boolean);
-        const cleanTag = t => t.replace(/b[12]#[0-9a-fA-F]{3,6}/g, '').replace(/#[0-9a-fA-F]{3,6}$/g, '').replace(/\s+/g, ' ').trim();
+        const cleanTag = t => t.replace(/b[12]#[0-9a-fA-F]{3,6}/g, '').replace(/#[0-9a-fA-F]{3,6}$/g, '').replace(/\\s+/g, ' ').trim();
         const tagLabel = cleanTag(tags[0] || '');
-
-        return `
-            <a class="product-card reveal" href="${siteUrl}/product?id=${p.id}" target="_blank" rel="noopener" data-cat="${p.category_id}">
-                <div class="card-img-wrap">
-                    ${img ? `<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">` : ''}
-                    ${tagLabel ? `<div class="card-tag">${esc(tagLabel)}</div>` : ''}
-                </div>
-                <div class="card-body">
-                    <div class="card-cat">${esc(catName)}</div>
-                    <div class="card-title">${esc(p.name)}</div>
-                    <div class="card-footer">
-                        <div class="card-price"><span class="from">起</span><span class="amount">¥${minPrice.toFixed(2)}</span></div>
-                        <div class="card-cta">→</div>
-                    </div>
-                </div>
-            </a>`;
+        return `\n      <a class="product-card reveal" href="${siteUrl}/product?id=${p.id}" target="_blank" rel="noopener" data-cat="${p.category_id}"><div class="card-img">${img ? `<img src="${esc(img)}" alt="${esc(p.name)}" loading="lazy">` : ''}${tagLabel ? `<div class="card-badge">${esc(tagLabel)}</div>` : ''}</div><div class="card-body"><div class="card-cat">${esc(catName)}</div><div class="card-title">${esc(p.name)}</div><div class="card-foot"><div class="card-price"><span class="from">起</span>¥${minPrice.toFixed(2)}</div><div class="card-btn">→</div></div></div></a>`;
     }).join('\n');
 
     const ogImage = products[0]?.image_url ? fixImg(products[0].image_url, siteUrl) : (meta.siteLogo ? fixImg(meta.siteLogo, siteUrl) : '');
-
     const jsonLd = { "@context": "https://schema.org", "@type": "WebSite", "name": siteName, "description": SEO_DESC, "url": GITHUB_PAGES_URL, "potentialAction": { "@type": "SearchAction", "target": `${siteUrl}/product?id={search_term_string}`, "query-input": "required name=search_term_string" } };
     const itemListLd = { "@context": "https://schema.org", "@type": "ItemList", "itemListElement": products.filter(p => p.active !== 0).map((p, i) => ({ "@type": "ListItem", "position": i + 1, "item": { "@type": "Product", "name": p.name, "url": `${siteUrl}/product?id=${p.id}`, "image": p.image_url ? fixImg(p.image_url, siteUrl) : '', "offers": { "@type": "Offer", "price": p.variants?.length ? Math.min(...p.variants.map(v => v.price)) : 0, "priceCurrency": "CNY" } } })) };
 
     const html = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${esc(siteName)}${SEO_TITLE_SUFFIX ? ' - ' + esc(SEO_TITLE_SUFFIX) : ''}</title>
-    <meta name="description" content="${esc(SEO_DESC)}">
-    <meta name="keywords" content="${esc(SEO_KEYWORDS)}">
-    <meta name="author" content="${esc(SEO_AUTHOR)}">
-    <meta name="robots" content="${esc(SEO_ROBOTS)}">
-    <meta name="googlebot" content="${esc(SEO_ROBOTS)}">
+    <meta name="description" content="${esc(SEO_DESC)}"><meta name="keywords" content="${esc(SEO_KEYWORDS)}"><meta name="author" content="${esc(SEO_AUTHOR)}"><meta name="robots" content="${esc(SEO_ROBOTS)}"><meta name="googlebot" content="${esc(SEO_ROBOTS)}">
     ${SEO_CANONICAL ? `<link rel="canonical" href="${esc(SEO_CANONICAL)}">` : ''}
-    <meta property="og:type" content="${esc(SEO_OG.type || 'website')}">
-    <meta property="og:url" content="${esc(SEO_OG.url || GITHUB_PAGES_URL)}">
-    <meta property="og:title" content="${esc(siteName)}">
-    <meta property="og:description" content="${esc(SEO_DESC)}">
+    <meta property="og:type" content="${esc(SEO_OG.type || 'website')}"><meta property="og:url" content="${esc(SEO_OG.url || GITHUB_PAGES_URL)}"><meta property="og:title" content="${esc(siteName)}${SEO_TITLE_SUFFIX ? ' - ' + esc(SEO_TITLE_SUFFIX) : ''}"><meta property="og:description" content="${esc(SEO_DESC)}">
     ${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}
-    <meta property="og:locale" content="${esc(SEO_OG.locale || 'zh_CN')}">
-    <meta property="og:site_name" content="${esc(SEO_OG.siteName || siteName)}">
-    <meta name="twitter:card" content="${esc(SEO_TWITTER.card || 'summary_large_image')}">
-    <meta name="twitter:title" content="${esc(siteName)}">
-    <meta name="twitter:description" content="${esc(SEO_DESC)}">
+    <meta property="og:locale" content="${esc(SEO_OG.locale || 'zh_CN')}"><meta property="og:site_name" content="${esc(SEO_OG.siteName || siteName)}">
+    <meta name="twitter:card" content="${esc(SEO_TWITTER.card || 'summary_large_image')}"><meta name="twitter:title" content="${esc(siteName)}${SEO_TITLE_SUFFIX ? ' - ' + esc(SEO_TITLE_SUFFIX) : ''}"><meta name="twitter:description" content="${esc(SEO_DESC)}">
     ${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
-    <script type="application/ld+json">${JSON.stringify({...SEO_JSON_LD, ...jsonLd})}</script>
-    <script type="application/ld+json">${JSON.stringify(itemListLd)}</script>
+    <script type="application/ld+json">${JSON.stringify({...SEO_JSON_LD, ...jsonLd})}<\/script>
+    <script type="application/ld+json">${JSON.stringify(itemListLd)}<\/script>
     ${SEO_FAVICON ? `<link rel="icon" href="${esc(SEO_FAVICON)}">` : ''}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     <style>${CSS}</style>
 </head>
 <body>
-<div class="bg-effects"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
-<div class="bg-grid"></div>
+<nav class="nav"><div class="nav-inner"><a href="#" class="nav-brand"><img src="${esc(fixImg(meta.siteLogo || '', siteUrl))}" alt="${esc(siteName)}"> ${esc(siteName)}</a><div class="nav-links"><a href="#products">全部商品</a><a href="#features">为什么选择我们</a><a href="${siteUrl}" target="_blank" rel="noopener">帮助中心</a></div><a href="${siteUrl}" target="_blank" rel="noopener" class="nav-cta">进入商城</a></div></nav>
 
-<header class="header" id="header">
-    <div class="header-inner">
-        <div class="logo-area">
-            <div class="logo-mark">
-                <img src="${esc(fixImg(meta.siteLogo || '', siteUrl))}" alt="${esc(siteName)}">
-            </div>
-            <div class="logo-text-group">
-                <div class="logo-text">${esc(siteName)}</div>
-                <div class="logo-sub">商城原址：<a href="${siteUrl}" target="_blank" rel="noopener">${esc(siteUrl)}</a></div>
-            </div>
-        </div>
-        <div class="header-actions">
-            <div class="header-badge-sm"><div class="pulse-dot"></div>自动发货中</div>
-            <a href="${siteUrl}" target="_blank" rel="noopener" class="header-pill">进入商城 →</a>
-        </div>
-    </div>
-</header>
+<section class="hero"><div class="hero-inner"><div class="hero-content"><div class="hero-pill reveal"><span class="dot"></span>全场自动发货 · 质保无忧</div><h1 class="reveal">数字账号<br>的<span class="highlight">品质之选</span></h1><p class="reveal">甄选 Google Voice 靓号、Gmail 邮箱、Apple ID 等优质数字资源，一手源头直供，即买即用。</p><div class="hero-actions reveal"><a href="${siteUrl}" target="_blank" rel="noopener" class="btn-green">开始选购 →</a><a href="#features" class="btn-outline">了解更多</a></div></div><div class="hero-visual reveal"><div class="hero-card"><div class="hero-card-head"><div class="hero-card-icon">🏪</div><div><div class="hero-card-name">${esc(siteName)}</div><div class="hero-card-sub">一站式数字账号平台</div></div></div><div class="hero-card-grid"><div class="hero-card-stat"><div class="hero-card-num">${activeCats.length}</div><div class="hero-card-label">品类</div></div><div class="hero-card-stat"><div class="hero-card-num">${products.filter(p=>p.active!==0).length}+</div><div class="hero-card-label">商品</div></div><div class="hero-card-stat"><div class="hero-card-num">24h</div><div class="hero-card-label">发货</div></div></div></div></div></div></section>
 
-<section class="hero">
-    <div class="hero-glow"></div>
-    <div class="container">
-        <div class="hero-badge anim"><div class="badge-dot"></div>全场自动发货 · 安全可靠</div>
-        <h1 class="anim anim-d1">精选优质<br><span class="gradient-text">数字账号资源</span></h1>
-        <p class="hero-desc anim anim-d2">一站式解决账号与网站需求，稳定可靠，支持长期使用</p>
-        <div class="stats-row">
-            <div class="stat-chip anim anim-d3"><span class="stat-num">${categories.length}</span><span class="stat-label">分类</span></div>
-            <div class="stat-chip anim anim-d4"><span class="stat-num">${products.filter(p=>p.active!==0).length}</span><span class="stat-label">商品</span></div>
-            <div class="stat-chip anim anim-d5"><span class="stat-num">${products.reduce((s,p) => s + (p.variants?.length||0), 0)}</span><span class="stat-label">规格</span></div>
-            <div class="stat-chip anim anim-d6"><span class="stat-num">24h</span><span class="stat-label">发货</span></div>
-        </div>
-    </div>
-</section>
+<div class="trust-bar"><div class="trust-inner"><div class="trust-item reveal"><span class="icon">⚡</span> 付款即发货</div><div class="trust-item reveal"><span class="icon">🛡️</span> 质保免费换</div><div class="trust-item reveal"><span class="icon">💎</span> 一手源头价</div><div class="trust-item reveal"><span class="icon">🎯</span> 支持选靓号</div></div></div>
 
-<div class="container filter-section">
-    <div class="filter-bar">
-        <div class="filter-btn active" onclick="filterCategory('all', this)">全部商品</div>
-        ${catBtns}
-    </div>
-</div>
+<section class="section"><div class="container"><div class="section-header reveal"><div class="section-tag">产品分类</div><h2 class="section-title">找到你需要的账号类型</h2><p class="section-desc">覆盖 Google Voice、Gmail、Apple ID 及技术服务，精准匹配你的需求。</p></div><div class="cat-grid">${catCards}</div></div></section>
 
-<section class="products-section">
-    <div class="container">
-        <div class="products-grid">
-            ${cards}
-        </div>
-    </div>
-</section>
+<section class="section section-gray" id="products"><div class="container"><div class="section-header reveal"><div class="section-tag">全部商品</div><h2 class="section-title">精选优质数字资源</h2><p class="section-desc">每一款商品都经过严格筛选，确保品质与稳定性。</p></div><div class="filter-bar"><div class="filter-btn active" onclick="filterCategory('all', this)">全部</div>${catBtns}</div><div class="products-grid">${cards}</div></div></section>
 
-<section class="features-section">
-    <div class="container">
-        <div class="features-grid">
-            <div class="feature-card reveal"><div class="feature-icon">⚡</div><h3>即时发货</h3><p>付款后自动发货，无需等待人工处理</p></div>
-            <div class="feature-card reveal"><div class="feature-icon">🛡️</div><h3>品质保障</h3><p>质保期内首登有问题免费更换</p></div>
-            <div class="feature-card reveal"><div class="feature-icon">💎</div><h3>源头价格</h3><p>一手资源，拒绝中间商差价</p></div>
-            <div class="feature-card reveal"><div class="feature-icon">🎯</div><h3>可选靓号</h3><p>支持自选号码，精准匹配需求</p></div>
-        </div>
-    </div>
-</section>
+<section class="section section-dark" id="features"><div class="container"><div class="section-header reveal"><div class="section-tag">我们的优势</div><h2 class="section-title">为什么选择${esc(siteName)}</h2><p class="section-desc">我们不只是卖账号，更是提供值得信赖的数字服务体验。</p></div><div class="features-grid"><div class="feature-card reveal"><span class="feature-icon">⚡</span><h3>即时自动发货</h3><p>付款即发货，7×24 小时不间断运行。</p></div><div class="feature-card reveal"><span class="feature-icon">🛡️</span><h3>品质保障</h3><p>质保期内免费更换，购物零风险。</p></div><div class="feature-card reveal"><span class="feature-icon">💎</span><h3>源头直供</h3><p>一手资源，无中间商差价。</p></div><div class="feature-card reveal"><span class="feature-icon">🎯</span><h3>自选靓号</h3><p>AAA、纯数字、规律号段可选。</p></div></div></div></section>
 
-<section class="cta-section">
-    <div class="container">
-        <div class="cta-banner reveal">
-            <h2>找到你需要的账号了吗？</h2>
-            <p>全场自动发货，安全可靠，支持长期使用</p>
-            <a href="${siteUrl}" target="_blank" rel="noopener" class="cta-btn">立即前往商城 →</a>
-        </div>
-    </div>
-</section>
+<section class="section"><div class="editorial"><div class="editorial-content reveal"><div class="section-tag">关于 Google Voice</div><h2>为什么 Google Voice<br>是你的必备工具</h2><p>Google Voice 提供免费美国电话号码，支持接打电话、收发短信，是跨境电商、海外业务、社媒注册的必备工具。选一个稳定靓号，让海外通讯更专业。</p><div class="editorial-stats"><div><div class="editorial-num">¥49.99</div><div class="editorial-label">起步价</div></div><div><div class="editorial-num">永久</div><div class="editorial-label">使用期</div></div><div><div class="editorial-num">秒发</div><div class="editorial-label">到账</div></div></div></div><div class="editorial-visual reveal"><img src="${ogImage || ''}" alt="Google Voice 靓号"></div></div></section>
 
-<footer class="footer">
-    <div class="container">
-        <div class="footer-line"></div>
-        <div class="footer-links"><a href="${siteUrl}" target="_blank" rel="noopener">🏪 进入商城</a></div>
-        <p style="margin-bottom:6px">© ${new Date().getFullYear()} ${esc(siteName)} · 所有商品均为虚拟数字商品</p>
-        <p>商城原址：<a href="${siteUrl}" target="_blank" rel="noopener">${esc(siteUrl)}</a></p>
-    </div>
-</footer>
+<section class="section section-gray"><div class="container"><div class="banner reveal"><h2>准备好开始了吗？</h2><p>浏览全部商品，找到最适合你的数字账号。全场自动发货，即买即用。</p><a href="${siteUrl}" target="_blank" rel="noopener" class="btn-white">立即前往商城 →</a></div></div></section>
 
-<script>${JS}</script>
-</body>
-</html>`;
+<footer class="footer"><div class="footer-grid"><div><div class="footer-brand">${esc(siteName)}</div><div class="footer-desc">一站式数字账号采购平台，为全球用户提供高品质 Google Voice、Gmail、Apple ID 等数字账号服务。</div></div><div class="footer-col"><h4>产品</h4><a href="${siteUrl}" target="_blank" rel="noopener">GV 靓号</a><a href="${siteUrl}" target="_blank" rel="noopener">谷歌邮箱</a><a href="${siteUrl}" target="_blank" rel="noopener">苹果 ID</a><a href="${siteUrl}" target="_blank" rel="noopener">技术服务</a></div><div class="footer-col"><h4>支持</h4><a href="${siteUrl}" target="_blank" rel="noopener">帮助中心</a><a href="${siteUrl}" target="_blank" rel="noopener">联系客服</a><a href="${siteUrl}" target="_blank" rel="noopener">售后服务</a></div><div class="footer-col"><h4>商城</h4><a href="${siteUrl}" target="_blank" rel="noopener">进入商城</a><a href="${siteUrl}" target="_blank" rel="noopener">我的订单</a></div></div><div class="footer-bottom"><span>© ${new Date().getFullYear()} ${esc(siteName)} · 所有商品均为虚拟数字商品</span><span>商城：<a href="${siteUrl}" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.5)">${esc(siteUrl)}</a></span></div></footer>
+
+<script>${JS}<\/script>
+</body></html>`;
 
     fs.writeFileSync(path.join(DIST_DIR, 'index.html'), html);
     console.log(`✅ dist/index.html (${(Buffer.byteLength(html)/1024).toFixed(1)}KB)`);
     console.log(`   商品: ${products.filter(p=>p.active!==0).length} 个`);
     console.log(`   分类: ${activeCats.length} 个`);
-    console.log(`   风格: 现代科技感 · 深色主题 · 流光渐变`);
-    console.log(`   链接: 全部指向 ${siteUrl}/product?id=xxx`);
+    console.log(`   风格: Shopify · 干净商务 · 绿色主题`);
 }
 
 main();
